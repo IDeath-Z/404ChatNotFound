@@ -1,4 +1,9 @@
 package com.deathz.chat.adapters.web.dto;
 
-public record MessageResponseDTO(String message) {
+import java.time.LocalDateTime;
+
+public record MessageResponseDTO(
+        int sequenceNumber,
+        String content,
+        LocalDateTime createdAt) {
 }

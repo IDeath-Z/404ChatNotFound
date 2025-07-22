@@ -1,6 +1,7 @@
 package com.deathz.chat.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,9 +48,15 @@ public class Conversation {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "conversation", cascade = CascadeType.PERSIST, orphanRemoval = false)
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
     @Column(name = "is_archived", nullable = false)
     private boolean isArchived;
+
+    public Conversation(String title, String modelName) {
+        this.title = title;
+        this.modelName = modelName;
+        this.isArchived = false;
+    }
 
 }

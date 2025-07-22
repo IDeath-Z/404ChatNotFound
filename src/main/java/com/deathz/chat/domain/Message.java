@@ -35,11 +35,8 @@ public class Message {
     @JoinColumn(name = "conversation_id", nullable = false)
     private Conversation conversation;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
-
-    @Column(name = "tokens_used", nullable = false)
-    private int tokensUsed;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
@@ -48,7 +45,9 @@ public class Message {
     @Column(name = "is_user_message", nullable = false)
     private boolean isUserMessage;
 
-    @Column(name = "sequence_number", nullable = false)
-    private int sequenceNumber;
-
+    public Message(Conversation conversation, String content, boolean isUserMessage) {
+        this.conversation = conversation;
+        this.content = content;
+        this.isUserMessage = isUserMessage;
+    }
 }

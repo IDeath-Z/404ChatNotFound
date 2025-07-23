@@ -11,8 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.deathz.chat.adapters.web.dto.ConversationRequestDTO;
 import com.deathz.chat.adapters.web.dto.MessageRequestDTO;
 import com.deathz.chat.application.service.ChatService;
-
-import io.swagger.v3.oas.annotations.Parameter;
+import com.deathz.chat.application.service.DocumentService;
 
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +24,9 @@ public class ChatController {
 
     @Autowired
     private ChatService chatService;
+
+    @Autowired
+    private DocumentService documentService;
 
     @PutMapping("conversation")
     public ResponseEntity<?> generateConversation(@RequestBody ConversationRequestDTO request) {
@@ -44,7 +46,7 @@ public class ChatController {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("File is empty!");
         }
-        return ResponseEntity.ok("File uploaded: " + file.getOriginalFilename());
+        return ResponseEntity.ok(documentService.processPDF(file));
     }
 
     // @GetMapping(value = "/generateStream", produces =

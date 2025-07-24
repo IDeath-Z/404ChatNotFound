@@ -68,7 +68,7 @@ public class ChatService {
 
         if (file != null && !file.isEmpty()) {
 
-            finalMessage.append(documentService.processDocument(file));
+            finalMessage.append(documentService.extractText(file));
         }
 
         String llmResponse = chatModel.call(finalMessage.toString());

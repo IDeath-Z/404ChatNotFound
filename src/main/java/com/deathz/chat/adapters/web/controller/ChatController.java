@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -22,7 +21,7 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
-    @PutMapping("/conversation")
+    @PostMapping("/conversation")
     public ResponseEntity<?> generateConversation(@RequestBody ConversationRequestDTO request) {
 
         return ResponseEntity.ok().body(chatService.addConversation(request));

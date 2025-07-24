@@ -3,8 +3,6 @@ package com.deathz.chat.adapters.web;
 import java.time.OffsetDateTime;
 import java.util.Map;
 
-import javax.security.auth.login.AccountNotFoundException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

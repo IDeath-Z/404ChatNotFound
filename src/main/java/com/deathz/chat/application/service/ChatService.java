@@ -2,10 +2,12 @@ package com.deathz.chat.application.service;
 
 import java.util.List;
 
+import org.apache.james.mime4j.dom.Multipart;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.deathz.chat.adapters.web.dto.ConversationRequestDTO;
 import com.deathz.chat.adapters.web.dto.ConversationResponseDTO;
@@ -36,6 +38,9 @@ public class ChatService {
     @Autowired
     private MessageMapper messageMapper;
 
+    @Autowired
+    private DocumentService documentService;
+
     @Value("${LLM_MODEL}")
     private String llmModel;
 
@@ -47,15 +52,22 @@ public class ChatService {
                 conversationRepository.save(conversation));
     }
 
-    public List<MessageResponseDTO> addMessage(MessageRequestDTO request) {
+    public List<MessageResponseDTO> addMessage(MessageRequestDTO request, MultipartFile file) {
+
+        StringBuilder finalMessage = new StringBuilder(request.content());
 
         Conversation conversation = conversationRepository.findById(request.conversationId())
                 .orElseThrow(() -> new RuntimeException("Conversation not found"));
 
-        Message userMessage = new Message(conversation, request.content(), true);
+        if (file != null && !file.isEmpty()) {
+
+            finalMessage.append(documentService.processPDF(file));
+        }
+
+        Message userMessage = new Message(conversation, finalMessage.toString(), true);
         messageRepository.save(userMessage);
 
-        String llmResponse = chatModel.call(userMessage.getContent());
+        String llmResponse = chatModel.call(finalMessage.toString());
 
         Message llmMessage = new Message(conversation, llmResponse, false);
         messageRepository.save(llmMessage);

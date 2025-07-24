@@ -11,7 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class DocumentService {
 
     public String processPDF(MultipartFile pdf) {
+
         StringBuilder content = new StringBuilder();
+
+        content.append("\n======== Start of PDF Content ========\n");
 
         try (PDDocument document = PDDocument.load(pdf.getInputStream())) {
 
@@ -24,6 +27,8 @@ public class DocumentService {
 
             e.printStackTrace();
         }
+
+        content.append("\n======== End of PDF Content ========\n");
         return content.toString();
     }
 }

@@ -12,6 +12,7 @@ import com.deathz.chat.adapters.web.dto.ConversationRequestDTO;
 import com.deathz.chat.adapters.web.dto.MessageRequestDTO;
 import com.deathz.chat.application.service.ChatService;
 import com.deathz.chat.application.service.DocumentService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,16 +29,21 @@ public class ChatController {
     @Autowired
     private DocumentService documentService;
 
-    @PutMapping("conversation")
+    @PutMapping("/conversation")
     public ResponseEntity<?> generateConversation(@RequestBody ConversationRequestDTO request) {
 
         return ResponseEntity.ok().body(chatService.addConversation(request));
     }
 
-    @PutMapping("message")
-    public ResponseEntity<?> generateMessage(@RequestBody MessageRequestDTO request) {
+    @PostMapping(value = "/message", consumes = "multipart/form-data")
+    public ResponseEntity<?> generateMessage(
+            @RequestPart("message") String messageJson,
+            @RequestPart(value = "file", required = false) MultipartFile file) throws Exception {
 
-        return ResponseEntity.ok().body(chatService.addMessage(request));
+        ObjectMapper mapper = new ObjectMapper();
+        MessageRequestDTO request = mapper.readValue(messageJson, MessageRequestDTO.class);
+
+        return ResponseEntity.ok().body(chatService.addMessage(request, file));
     }
 
     @PostMapping(value = "/upload", consumes = "multipart/form-data")

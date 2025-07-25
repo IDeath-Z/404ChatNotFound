@@ -16,10 +16,12 @@ public class ModelService {
         private String value;
 
         Model(String value) {
+
             this.value = value;
         }
 
         public String getValue() {
+
             return value;
         }
     }
@@ -27,9 +29,12 @@ public class ModelService {
     private String currentModel;
 
     public ModelService(@Value("${LLM_MODEL:}") String model) {
+
         if (model == null || model.isBlank()) {
+
             this.currentModel = Model.DEFAULT.getValue();
         } else {
+
             this.currentModel = model;
         }
     }

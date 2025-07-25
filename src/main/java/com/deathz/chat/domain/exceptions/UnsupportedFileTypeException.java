@@ -2,9 +2,9 @@ package com.deathz.chat.domain.exceptions;
 
 public class UnsupportedFileTypeException extends RuntimeException {
 
-    public UnsupportedFileTypeException(String fileType) {
+    public UnsupportedFileTypeException() {
 
-        super("Unsupported file type: " + fileType);
+        super("Unsupported file type");
     }
 
     public UnsupportedFileTypeException(String message, Throwable cause) {

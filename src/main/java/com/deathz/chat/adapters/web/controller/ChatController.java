@@ -32,7 +32,7 @@ public class ChatController {
     public ResponseEntity<?> generateMessage(@RequestPart("message") String messageRequest,
             @RequestPart(value = "file", required = false) MultipartFile file) throws Exception {
 
-        return ResponseEntity.ok().body(chatService.addMessage(messageRequest, file));
+        return ResponseEntity.ok().body(chatService.processTextContent(messageRequest, file));
     }
 
     // @GetMapping(value = "/generateStream", produces =

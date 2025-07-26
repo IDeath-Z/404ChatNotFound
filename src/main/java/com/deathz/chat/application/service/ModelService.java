@@ -8,10 +8,10 @@ public class ModelService {
 
     public static enum Model {
 
-        DEFAULT("llama3.1:8b"),
         LLAMA3("llama3.1:8b"),
         DEEPSEEK("deepseek-r1:8b"),
-        GEMMA3("gemma3:4b");
+        GEMMA3("gemma3:4b"),
+        LLAVA("llava-llama3:8b");
 
         private String value;
 
@@ -30,13 +30,7 @@ public class ModelService {
 
     public ModelService(@Value("${LLM_MODEL:}") String model) {
 
-        if (model == null || model.isBlank()) {
-
-            this.currentModel = Model.DEFAULT.getValue();
-        } else {
-
-            this.currentModel = model;
-        }
+        this.currentModel = model;
     }
 
     public String getCurrentModel() {

@@ -3,6 +3,7 @@ package com.deathz.chat.adapters.web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.deathz.chat.adapters.web.dto.ConversationRequestDTO;
 import com.deathz.chat.application.service.ChatService;
+import com.deathz.chat.application.service.ModelService;
 
 @RestController
 @CrossOrigin
@@ -20,6 +22,9 @@ public class ChatController {
 
     @Autowired
     private ChatService chatService;
+
+    @Autowired
+    private ModelService modelService;
 
     @PostMapping("/conversation")
     public ResponseEntity<?> generateConversation(@RequestBody ConversationRequestDTO request) {
@@ -32,7 +37,13 @@ public class ChatController {
     public ResponseEntity<?> generateMessage(@RequestPart("message") String messageRequest,
             @RequestPart(value = "file", required = false) MultipartFile file) throws Exception {
 
-        return ResponseEntity.ok().body(chatService.processTextContent(messageRequest, file));
+        return ResponseEntity.ok().body(chatService.choseModel(messageRequest, file));
+    }
+
+    @GetMapping("/model")
+    public String getName() {
+
+        return modelService.getCurrentModel();
     }
 
     // @GetMapping(value = "/generateStream", produces =

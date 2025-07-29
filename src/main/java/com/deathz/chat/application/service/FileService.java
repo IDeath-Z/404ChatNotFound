@@ -9,7 +9,6 @@ import org.springframework.util.MimeType;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.deathz.chat.domain.exceptions.FailedToParseFileException;
-import com.deathz.chat.domain.exceptions.FileNameIsNullException;
 
 @Service
 public class FileService {

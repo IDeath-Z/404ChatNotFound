@@ -1,10 +1,15 @@
 package com.deathz.chat.application.service;
 
+import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ModelService {
+
+    @Autowired
+    private OllamaChatModel chatModel;
 
     public static enum Model {
 
@@ -41,5 +46,10 @@ public class ModelService {
     public void setCurrentModel(String model) {
 
         this.currentModel = model;
+    }
+
+    public OllamaChatModel getChatModel() {
+
+        return chatModel;
     }
 }

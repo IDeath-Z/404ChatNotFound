@@ -37,7 +37,7 @@ public class ChatController {
     public ResponseEntity<?> generateMessage(@RequestPart("message") String messageRequest,
             @RequestPart(value = "file", required = false) MultipartFile file) throws Exception {
 
-        return ResponseEntity.ok().body(chatService.choseModel(messageRequest, file));
+        return ResponseEntity.ok().body(chatService.chat(messageRequest, file));
     }
 
     @GetMapping("/model")

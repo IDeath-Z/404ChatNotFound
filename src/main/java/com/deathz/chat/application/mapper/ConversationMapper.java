@@ -11,9 +11,6 @@ public class ConversationMapper {
     public ConversationResponseDTO toResponseDTO(Conversation conversation) {
         return new ConversationResponseDTO(
                 conversation.getId(),
-                conversation.getTitle(),
-                conversation.getMessages().stream()
-                        .map(message -> new MessageMapper().toResponseDTO(message))
-                        .toList());
+                conversation.getTitle());
     }
 }

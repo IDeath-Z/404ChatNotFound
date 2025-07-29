@@ -18,8 +18,6 @@ public class FileService {
 
     public String extractText(MultipartFile file) {
 
-        validateFile(file);
-
         StringBuilder finalMessage = new StringBuilder();
         try {
 
@@ -34,8 +32,6 @@ public class FileService {
     }
 
     public Media buildMedia(MultipartFile file) {
-
-        validateFile(file);
 
         try {
 
@@ -53,7 +49,10 @@ public class FileService {
 
     public String getFileType(MultipartFile file) {
 
-        validateFile(file);
+        if (file == null || file.isEmpty()) {
+
+            return "";
+        }
 
         try {
 
@@ -61,14 +60,6 @@ public class FileService {
         } catch (Exception e) {
 
             throw new FailedToParseFileException(e);
-        }
-    }
-
-    private void validateFile(MultipartFile file) {
-
-        if (file == null || file.isEmpty()) {
-
-            throw new FileNameIsNullException();
         }
     }
 }
